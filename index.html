@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Charlotte Kleiman">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,500;0,800;1,300;1,500;1,800&display=swap" rel="stylesheet">
+    <title>Path To Conversions Data Visualiser</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <script defer src="script.js"></script>
+
+</head>
+<body>
+
+<!-- change -->
+
+<div class="upload-container hide" id="upload-gif">
+  <div class="upload-image"></div>
+</div>
+
+
+<div id="welcome">
+  <div class="welcome-container">
+    <h3>Upload a path to conversion report here</h3>
+    <input type="file" id="file-selector">
+    <!-- <p>Note: Not recommended for files over 15k rows</p> -->
+  </div>
+</div>
+
+<div id="error-message" class="error-message hide">
+  <div class="error-message-inner-container">
+    <div class="exit-button" onclick="reload()">X</div>
+    <h4>There is an issue with your file. </h4>
+    <p class="error-message-text">Upload a path to conversion file using the <span class="emph-color-2">My Reports Path to Conversion template.</span></p>
+    <p class="error-message-text">Please make sure file is saved in <span class="emph-color-2">csv</span> format.</p>
+  </div>
+</div>
+
+<div class="results-container hide" id="results-container">
+
+  <div class="filters-header">
+    <div class="filters-title"></div>
+  </div>
+  <div id="filters"></div>
+  <div id="apply-filters" class="apply-filters-outercontainers">
+    <div id="apply-filters-button" class="apply-filters-button">Apply Filters</div>
+  </div>
+
+  <h3 id="results-basics-header" class="section-header hide">Overall Stats</h3>
+  <div id="results-basics"></div>
+
+  <!-- Sample impression path -->
+
+  <div id="sampleImpression-section" class="hide header-wrapper">
+    <h3 class="sampleImpression-header">Sample User Path</h3>
+    <!-- <div id="site-image" class="site-image"></div> -->
+  </div>
+  <div id="generate-random-button" class="hide">Generate Random User</div>
+  <div id="results-sample-path"></div>
+
+
+  <!-- Device -->
+  <div id="device-section" class="hide header-wrapper">
+    <h3 class="section-header">Cross Device Conversion Paths</h3>
+    <div id="device-image" class="device-image"></div>
+  </div>
+
+  <div id="results-lastImpression-device-pt1" class="overall-stats-container"></div>
+
+  <div id="results-CTV-Comparison" class="CTV-comparison-container">
+    <div id="impressions-per-conversion-callout" class="ctv-comparison-callouts"></div>
+    <div id='CTV-Comparison-Chart-1'></div>
+    <div id="time-to-convert-callout" class="ctv-comparison-callouts"></div>
+    <div id='CTV-Comparison-Chart-2'></div>
+  </div>
+
+  <div id="results-lastImpression-device-pt2"></div>
+  <div id="results-lastImpression-device"></div>
+  <div id="no-results-device-container" class="no-results-container">
+    <p id="no-results-device-callout"></p>
+  </div>
+
+  <!-- Device And LP to Conversion Rate -->
+
+  <div class="LP-To-ConversionRate-OuterContainer hide" id="LPtoConv-outer-section">
+    <div id="LPtoConv-section" class="header-wrapper">
+      <h3 class="section-header">Landing Page Visit To Conversion Rate Data</h3>
+    </div>
+
+    <div class="pixel-selection-outer-outer-container">
+      <div class="pixel-selection-outer-container">
+        <div class="pixel-selection-container">
+          <div class="select-pixel-button" id="select-landing-page-button" ><i id="landing-page-pixel-arrow" class="arrow right"></i><span class="select-pixel-button-text">Select Landing Page Pixel(s)</span></div>
+          <div id="landing-page-pixels-options" class="pixel-selection-box hide"></div>
+        </div>
+        <div class="chosen-pixel-selection-container">
+          <div id="landing-page-pixels-chosen" class="chosen-pixels-box"></div>
+        </div>
+      </div>
+
+      <div class="pixel-selection-outer-container">
+        <div class="pixel-selection-container">
+          <div class="select-pixel-button" id="select-conversion-button" ><i id="conversion-pixel-arrow" class="arrow right"></i><span class="select-pixel-button-text">Select Key Conversion Pixel(s)</span></div>
+          <div id="conversion-pixels-options" class="pixel-selection-box hide"></div>
+        </div>
+        <div class="chosen-pixel-selection-container">
+          <div id="conversion-pixels-chosen" class="chosen-pixels-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id='LPtoConversion-callout-container'></div>
+    <div id="LPtoConversion-download-button-container"></div>
+
+    <div id="LPtoConversionChart-Placeholder-Outer">
+      <div id='LPtoConversionChart-Placeholder-1' class="LPtoConversionChart-Placeholder-1">
+        <div class="LPtoConversionChart-Placeholder-Inner-Section"></div>
+      </div>
+    </div>
+
+    <div id='LPtoConversionChart-1'></div>
+
+  </div>
+
+  <!-- UTM Source Data -->
+
+  <div class="UTM-OuterContainer hide" id="UTM-outer-section">
+    <div id="UTM-section" class="header-wrapper">
+      <h3 class="section-header">UTM Source Data</h3>
+    </div>
+
+    <div id='UTMSource-callout-container' class="grain-bullets-container"></div>
+
+    <p class="chart-description">Count of Trade Desk Influenced conversions with each UTM source on the user's conversion path (at the time of converting or earlier). "0" indicates there were no UTM parameters.</p>
+    <!-- <div id='UTMChart-1'></div> -->
+
+    <div id="UTM-download-button-container"></div>
+
+    <div class="UTM-table-wrapper">
+      <table id="UTM-Table" class="styled-table"></table>
+    </div>
+  </div>
+
+
+  <!-- Conversions By Frequency Data -->
+
+  <div class="Frequency-OuterContainer hide" id="Frequency-outer-section">
+    <div id="Frequency-section" class="header-wrapper">
+      <h3 class="section-header">Conversions By Frequency</h3>
+    </div>
+
+    <div id='Frequency-callout-container' class="grain-bullets-container">
+      Compare distribution of conversions to distribution of impressions (with a frequency distribution report) to 
+      understand how frequency impacts conversion rate.</div>
+
+    <div id='FrequencyChartInnerContainer'></div>
+    <!-- <div id='FrequencyChart-1'></div> -->
+
+  </div>
+
+  <!-- Site -->
+  <div id="site-section" class="hide header-wrapper">
+    <h3 class="section-header">Site Conversion Paths</h3>
+    <div id="site-image" class="site-image"></div>
+  </div>
+
+  <div id="results-lastImpression-site-pt1" class="overall-stats-container"></div>
+  <div id="results-lastImpression-site-pt2"></div>
+  <div id="results-lastImpression-site"></div>
+
+  <div id='sitesChart-1'></div>
+  <div id='sitesChart-2'></div>
+  <div id='sitesChart-3'></div>
+
+  <!-- Campaign -->
+
+  <div id="campaign-section" class="hide header-wrapper">
+    <h3 class="section-header">Campaign Conversion Paths</h3>
+    <div id="campaign-image" class="campaign-image"></div>
+  </div>
+
+  <div id="results-lastImpression-campaign-pt1" class="overall-stats-container"></div>
+  <div id="results-lastImpression-campaign-pt2"></div>
+  <div id="results-lastImpression-campaign"></div>
+
+  <div id='campaignsChart-1'></div>
+  <div id='campaignsChart-2'></div>
+  <div id='campaignsChart-3'></div>
+
+  <!-- Sunburst Chart -->
+
+  <div class="sunburst-OuterContainer hide" id="sunburst-outer-section">
+    <div id="sunburst-section" class="header-wrapper">
+      <h3 class="section-header">Page Visit Breakdown</h3>
+    </div>
+
+    <div class="select-pixel-button" id="select-sunburst-button" ><i id="sunburst-pixel-arrow" class="arrow right"></i><span class="select-pixel-button-text" id="select-sunburst-pixel-button-text"></span></div>
+    <div id="sunburst-pixels-options" class="pixel-selection-box hide"></div>
+
+  <div id='sunburst-warning' class="sunbust-warning hide">Not enough data</div>
+  <div id='sunburst-chart'></div>
+  </div>
+
+
+</div>
+
+</body>
+</html>
