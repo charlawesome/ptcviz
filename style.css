@@ -11,6 +11,12 @@
     justify-content: center;
 }
 
+#file-selector{
+  border: 1px dashed black;
+  padding: 20px;
+  border-radius: 5px;
+}
+
 .error-message{
   width: 90vw;
   height: 90vh;
@@ -88,6 +94,7 @@ input{
       flex-direction: column;
       justify-content: center;
       font-family: 'Work Sans', sans-serif;
+      font-family: 'Noto Sans JP', sans-serif;
       overflow-x: hidden;
       /* background-color: rgb(73, 92, 40); */
       transition: .2s ease-in-out; 
@@ -382,7 +389,6 @@ input{
 
 .FilterContent:hover{
   cursor: pointer;
-  /* background-color: #afbfdd; */
   border: 1px solid #0098FA;
   color: #0098FA;
 }
@@ -607,18 +613,25 @@ input{
 }
 
 .pathnode-container{
-  border: 1px solid black;
-  margin: 1vh;
-  padding: 1vh;
+  border: 1px solid lightgrey;
+  margin: 10px;
+  padding: 15px;
   border-radius: 2vh;
   max-width: 12vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 150px;
 }
 
 .pathnode-stat{
-  padding: 1vh;
+  padding: 5px;
   text-align: center;
-  font-size: 15px;
-  overflow-wrap: break-word;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
 }
 
 .sample-path-person-outercontainer{
@@ -643,22 +656,141 @@ input{
   text-align: center;
 }
 
-.Conversion-pathnode-container{
-  background: #f7d031;
-  border: 1px solid #F98300;
+.Conversion-stat{
+ color: #FC5D1F;
 }
 
-.Impression-pathnode-container{
-  background: #A6DBFD;
+.Impression-stat{
+  color:#002E87;
+}
+
+.Click-stat{
+  color:#0098FA;
+}
+
+.click-image{
+  background-image: url('img/click.png'); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.eventType-stat-image{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 8px;
+  height: 8px;
+}
+
+.eventType-stat-container{
+  display: flex;
+  justify-content: center;
+}
+
+.device-pathnode-image{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.Tablet-pathnode-image{
+  background-image: url('img/tablet.png'); 
+}
+
+.Mobile-pathnode-image{
+  background-image: url('img/mobile.png'); 
+}
+
+.ConnectedTV-pathnode-image{
+  background-image: url('img/ConnectedTV.png'); 
+}
+
+.PC-pathnode-image{
+  background-image: url('img/PC.png'); 
+}
+
+.OutOfHome-pathnode-image{
+  background-image: url('img/OutOfHome.png'); 
+}
+
+.Other-pathnode-image{
+  background-image: ""; 
+}
+
+.-pathnode-image{
+  background-image: url('img/Stars.png'); 
+}
+
+.conversion-site-stat{
+  font-size: 9px;
+}
+
+.subdetails-pathnode-stat{
+  font-size: 9px;
+}
+
+.subdetail-title{
+  font-weight: bold;
+}
+
+.user-path-buttons-outer-container{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.filter-icon{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 15px;
+  height: 15px;
+  background-image: url('img/filter-icon-0.png'); 
+  position: relative;
+  top: 4px;
+}
+
+#filter-two-devices-button{
+  border-radius: 2vw;
+  padding: 1vh 2vh 1vh 2vh; 
+  font-size: 15px;
+  margin: 2vh;
+  text-align: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
+
+.two-devices-filter-unselected{
+  border: 1px solid grey;
+  background-color: rgb(238, 238, 238);
+}
+
+.two-devices-filter-unselected:hover{
+  cursor: pointer;
   border: 1px solid #0098FA;
+  color: #0098FA;
 }
 
+.two-devices-filter-selected{
+  background-color: #B4CEFF;
+  border: 1px solid #002E87;
+  color: #002E87;
+}
 
-.Click-pathnode-container{
-  background: #002E87;
+.two-devices-filter-selected:hover{
+  cursor: pointer;
+  background-color: #b3bed4;
   border: 1px solid #0098FA;
-  color: white;
+  color: #0098FA;
 }
+
 
 #generate-random-button{
   border: 1px solid #002F87;
@@ -669,6 +801,7 @@ input{
   margin: 2vh;
   text-align: center;
   cursor: pointer;
+  justify-content: center;
 }
 
 #generate-random-button:hover{
@@ -701,13 +834,25 @@ input{
   font-size: 15px;
   margin: 2vh;
   text-align: center;
-  cursor: pointer;
+  /* background-color: #CBEBFF;
+  color: #0098FA;
+  border: 1px solid #0098FA; */
+}
+
+.apply-filters-button-grey{
+  border: 1px solid grey;
+  background-color: rgb(238, 238, 238);
+  color: darkslategrey;
+}
+
+.apply-filters-button-blue{
   background-color: #CBEBFF;
   color: #0098FA;
   border: 1px solid #0098FA;
 }
 
-.apply-filters-button:hover{
+.apply-filters-button-blue:hover{
+  cursor: pointer;
   background-color: #002F87;
   color: white;
   border: 1px solid #0098FA;
